@@ -14,6 +14,10 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// View engine setup
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
 // Routes
 app.use('/', checkoutRouter);
 app.use('/checkout', checkoutRouter);
