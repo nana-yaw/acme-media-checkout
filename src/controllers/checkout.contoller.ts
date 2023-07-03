@@ -12,13 +12,9 @@ export function makeOrder(req: Request, res: Response){
       return  res.send({status:401,message:'Cart Cannot Be Empty'});
     }
 
-    if(!Validate.validateFieldsNotEmpty(formObject)){
-      return  res.send({status:401,message:'Required field cannot be empty'});
+    if(!Validate.validateFieldsNotEmpty(formObject)){      
+      return  res.send({status:401,message:'Required field cannot be empty',formObject});
     };
-
-     if(!Validate.validateFieldsNotEmpty(formObject)){
-       return  res.send({status:401,message:'Required field cannot be empty'});
-     };
 
     if(formObject.paymentMethod === 'momo'){
   
@@ -26,8 +22,10 @@ export function makeOrder(req: Request, res: Response){
       if(!isValidPhoneNumber){
         errorResults.push({field:'momoNumber',value: isValidPhoneNumber,message:'PhoneNumber is Invalid'});
       }
+
+      const isValidNetwork = Validate.checkFieldValueNotEmpty(formObject.network);
   
-      if(isValidPhoneNumber && formObject.network){
+      if(isValidPhoneNumber && isValidNetwork){
         const payStatus = Order.placeOrder(formObject,cartItems);
        return res.send({status:200, errors:errorResults,message:'',payStatus});
        }else{
