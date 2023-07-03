@@ -1,3 +1,4 @@
+import { getNextMonthAndYear } from "../utils/helper";
 import { Validate } from "../utils/validate";
 
 describe('Validate', () => {
@@ -81,7 +82,8 @@ describe('Validate', () => {
 
   describe('compareValidExpDate', () => {
     test('returns true for a valid expiry date in the future', () => {
-      const futureExpiryDate = '2023/07';
+      let futureExpiryDate = getNextMonthAndYear();
+      // console.log(futureExpiryDate);
       const isValid = Validate.compareValidExpDate(futureExpiryDate);
       expect(isValid).toBe(true);
     });
